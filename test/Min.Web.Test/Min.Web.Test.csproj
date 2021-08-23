@@ -10,4 +10,10 @@
     <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Min.App.Business\Min.App.Biz.csproj" />
+    <ProjectReference Include="..\..\src\Min.Core\Min.App.Core.csproj" />
+    <ProjectReference Include="..\..\src\Min.Web\Min.App.Web.csproj" />
+  </ItemGroup>
+
 </Project>

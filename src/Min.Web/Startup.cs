@@ -1,3 +1,5 @@
+using Amazon.Runtime;
+using Amazon.S3;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -5,7 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Min.App.Common;
 using Min.App.Infrastructure;
+using Min.App.Web.Controllers;
 using Min.App.Web.Extensions;
 using System;
 using System.Collections.Generic;
@@ -16,13 +20,15 @@ namespace Min.Web
 {
     public class Startup
     {
+        private readonly IHostEnvironment _hostEnvironment;
         public IConfiguration Configuration
         {
             get;
         }
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostEnvironment hostEnvironment)
         {
             Configuration = configuration;
+            _hostEnvironment = hostEnvironment;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -30,6 +36,19 @@ namespace Min.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddTransient<IBucketRepository, BucketRepository>();
+
+            if (_hostEnvironment.IsDevelopment())
+            {
+                var amazonS3 = new AmazonS3Client(new BasicAWSCredentials("abc", "def"), new AmazonS3Config
+                {
+                    ServiceURL = Consts.S3ServiceUrl,
+                    ForcePathStyle = true,
+                    UseHttp = true
+                });
+
+                services.AddTransient(typeof(IAmazonS3), provider => amazonS3);
+            }
             services.AddAutoMapper(typeof(Startup));
             services.AddSwaggerGen();
             services

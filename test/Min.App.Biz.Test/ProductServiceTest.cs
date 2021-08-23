@@ -27,7 +27,7 @@ namespace Min.App.Biz.Test
         }
 
         [Test]
-        public async Task Valid_InsertDeviceIfNotFound()
+        public async Task Can_Add_Product()
         {
             
             var productService = new ProductService(_mockUnitOfWork.Object,_mockProductRepository.Object,_mockMapper.Object);

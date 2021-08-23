@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack
+    environment:
+     - SERVICES=s3:4572,ssm:4583
+     - DATA_DIR=/tmp/localstack/data
+    ports:
+     - "4563-4599:4563-4599"
+     - "9999:8080"
+    volumes:
+      - localstack-data:/tmp/localstack
+  # minapi:
+  #   build:
+  #     context: .
+  #     dockerfile: ../src/Min.Web/Dockerfile
+  #   volumes:
+  #     - .:/app
+  #     - /app/obj
+  #     - /app/bin
+  #     - ~/.nuget:/root/.nuget
+  #     - /root/.nuget/packages/.tools
+  #   ports:
+  #     - 3000:80  
+volumes:
+  localstack-data:
+    name: localstack-data
