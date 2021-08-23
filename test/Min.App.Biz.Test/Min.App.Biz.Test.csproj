@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.16.1" />
+    <PackageReference Include="NUnit" Version="3.13.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.13.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Min.App.Business\Min.App.Biz.csproj" />
+    <ProjectReference Include="..\..\src\Min.App.Repository\Min.App.Repository.csproj" />
+    <ProjectReference Include="..\..\src\Min.Core\Min.App.Core.csproj" />
+  </ItemGroup>
+
+</Project>
